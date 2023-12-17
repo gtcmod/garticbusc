@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Jogador do Gartic Jogando</title>
+    <link rel="icon" href="https://gartic.com.br/imgs/mural/ii/iikyuung/estranho-mundo-de-jack.png" type="image/png">
+
+    <!-- Importar a fonte do Google Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        /* Aplicar a fonte do Google Sans para todo o texto no HTML */
+        body {
+            font-family: 'Google Sans', sans-serif !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Google Sans', sans-serif; 
+        }
+        #container {
+            text-align: center;
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        /* Estilos para a tabela */
+        #tabelaJogadores {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 2px solid brown;
+        }
+        th {
+            background-color: brown;
+            color: white;
+            padding: 12px;
+        }
+        td {
+            padding: 12px;
+            border: 2px solid brown;
+        }
+
+        img {
+            width: 60px; /* Aumento do tamanho dos avatares */
+            height: 60px; /* Aumento do tamanho dos avatares */
+            width: 70px; /* Aumento do tamanho dos avatares */
+            height: 70px; /* Aumento do tamanho dos avatares */
+        }
+
+        /* Estilos para o input e botão */
+        #nickInput,
+        button {
+            font-family: 'Google Sans', sans-serif;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 2px solid brown;
+        }
+        #nickInput {
+            font-family: 'Google Sans', sans-serif;
+            color: black;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        button {
+            color: white;
+            background-color: brown;
+        }
+        /* Estilos para os títulos e labels */
+        h1,
+        label {
+            color: brown;
+            font-family: 'Google Sans', sans-serif;
+        }
+        /* Estilos para os status */
+        #status {
+            font-family: 'Google Sans', sans-serif;
+            margin-top: 10px;
+        }
+
+        .encontrado {
+            color: green !important; /* Corrigindo a cor para verde */
+            color: green;  /* Corrigindo a cor para verde */
+            font-family: 'Google Sans', sans-serif; /* Definindo a fonte */
+        }
+
+        .offline {
+            color: red;
+        }
+/* Estilo para o botão de voltar */
+        .btn-voltar {
+            position: fixed;
+            top: 20px; /* Ajuste a posição vertical conforme necessário */
+            left: 20px; /* Ajuste a posição horizontal conforme necessário */
+            background-color: brown;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            z-index: 9999; /* Para garantir que fique acima de outros elementos */
+            font-family: 'Google Sans', sans-serif; 
+        }
+
+        /* Estilo para ajustar o tamanho do botão em telas menores (mobile) */
+        @media screen and (max-width: 768px) {
+            .btn-voltar {
+                top: 10px; /* Ajuste a posição vertical para telas menores */
+                left: 10px; /* Ajuste a posição horizontal para telas menores */
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Buscar Jogador(a) do Gartic Jogando</h1>
+        <label for="nick" style="font-weight: bold;">Nick do jogador(a):</label>
+        <input type="text" id="nickInput" onkeyup="handleKeyPress(event)">
+        <button id="buscarJogador" onclick="buscarJogador()">Buscar Jogador(a)</button>
+        <p id="status"></p>
+        <table id="tabelaJogadores">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Avatar</th>
+                    <th style="text-align: center;">Nome do Jogador</th>
+                    <th style="text-align: center;">Sala</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabela"></tbody>
+        </table>
+        <!-- Botão de voltar -->
+    <a href="https://kelbovin.github.io/garticsala/" class="btn-voltar">Voltar</a>
+    </div>
+    <script>
+
+        const salas = [
+    "038394720", "038394725", "03", "038394729", "05", "038394732", "046",
+    "038394736", "08", "038394739", "010", "038394741", "012", "038394742",
+    "014", "015", "047", "017", "038394745", "038394746", "044", "045",
+    "022657", "027541", "027542", "030960", "037197", "059774", "060131",
+    "0156331", "019472087", "019472095", "019472132", "023", "024", "026",
+    "028", "029", "030", "0156348", "0156349", "01323822", "01433234",
+    "01441928", "01495442", "08275914", "08870952", "08870959", "08870981",
+    "015392586", "015392590", "018828862", "018828871", "018828877",
+    "018828880", "032", "011436440", "011436448", "029617", "011436456",
+    "011436462", "011436468", "011436470", "011436483", "011436488",
+    "01482291", "01495597", "011436741", "011436744", "08871018", "08871024",
+    "010583457", "010583459", "015352976", "015352985", "015392408",
+    "015392415", "015392529", "015392541", "019472533", "019472540",
+    "019472552", "019472562", "019474604", "019474618", "019474632",
+    "019474640", "033", "011436131", "011436139", "011436146", "011436155",
+    "061314", "011436159", "011436158", "011436189", "011436193", "01383125",
+    "01482285", "011436784", "08275850", "08871009", "011436796", "010583449",
+    "010583451", "015352954", "015352967", "023340", "064453", "064456",
+    "011436709", "01442892", "0180144", "011436612", "011436645", "011436654",
+    "08141297", "010583436", "034", "035", "01316875", "015146618",
+    "015269596", "015269602", "015352879", "015352887", "020", "021",
+    "01316871", "01483601", "05247712", "05247714", "053", "032829",
+    "042463", "036", "037", "038", "0111150", "031", "0204642", "0368492",
+    "01254112", "059", "0361146", "0368493", "051", "04539464", "024201",
+    "03158864", "03158865", "03161447", "055", "019472099", "019472106",
+    "0156332", "01441917", "01482259", "01482262", "01495485", "01495493",
+    "01495497", "01495505", "01495758", "01495822", "01495983", "01495996",
+    "01496355", "01496372", "01496382", "019472071", "019472077", "019472087",
+    "019472095", "019472099", "019472106", "019472132", // Adicione os demais IDs
+];
+        const nomeDasSalas = {
+    "038394720": "GERAL 1",
+    "038394725": "GERAL 2",
+    "03": "GERAL 3",
+    "038394729": "GERAL 4",
+    "05": "GERAL 5",
+    "038394732": "GERAL 6",
+    "046": "GERAL 7",
+    "038394736": "GERAL 8",
+    "08": "GERAL 9",
+    "038394739": "GERAL 10",
+    "010": "GERAL 11",
+    "038394741": "GERAL 12",
+    "012": "GERAL 13",
+    "038394742": "GERAL 14",
+    "014": "GERAL 15",
+    "015": "GERAL 16",
+    "047": "GERAL 17",
+    "017": "GERAL 18",
+    "038394745": "GERAL 19",
+    "038394746": "GERAL 20",
+    "044": "GERAL 21",
+    "045": "GERAL 22",
+    "022657": "GERAL 23",
+    "027541": "GERAL 24",
+    "027542": "GERAL 25",
+    "030960": "GERAL 26",
+    "037197": "GERAL 27",
+    "059774": "GERAL 28",
+    "060131": "GERAL 29",
+    "0156331": "GERAL 36",
+    "0156332": "GERAL 37",
+    "01441917": "GERAL 108",
+    "01482259": "GERAL 117",
+    "01482262": "GERAL 118",
+    "01495485": "GERAL 123",
+    "01495493": "GERAL 125",
+    "01495497": "GERAL 126",
+    "01495505": "GERAL 127",
+    "01495758": "GERAL 129",
+    "01495822": "GERAL 132",
+    "01495983": "GERAL 133",
+    "01495996": "GERAL 134",
+    "01496355": "GERAL 143",
+    "01496372": "GERAL 145",
+    "01496382": "GERAL 147",
+    "019472071": "GERAL 148",
+    "019472077": "GERAL 149",
+    "019472087": "GERAL 150",
+    "019472095": "GERAL 151",
+    "019472099": "GERAL 152",
+    "019472106": "GERAL 153",
+    "019472132": "GERAL 154",
+    "023": "OBJETOS 1",
+    "024": "OBJETOS 2",
+    "026": "OBJETOS 4",
+    "028": "OBJETOS 6",
+    "029": "OBJETOS 7",
+    "030": "OBJETOS 8",
+    "0156348": "OBJETOS 19",
+    "0156349": "OBJETOS 20",
+    "01323822": "OBJETOS 33",
+    "01433234": "OBJETOS 46",
+    "01441928": "OBJETOS 49",
+    "01495442": "OBJETOS 52",
+    "08275914": "OBJETOS 60",
+    "08870952": "OBJETOS 61",
+    "08870959": "OBJETOS 62",
+    "08870981": "OBJETOS 64",
+    "015392586": "OBJETOS 65",
+    "015392590": "OBJETOS 66",
+    "018828862": "OBJETOS 67",
+    "018828871": "OBJETOS 68",
+    "018828877": "OBJETOS 69",
+    "018828880": "OBJETOS 70",
+    "032": "ALIMENTOS 1",
+    "011436440": "ALIMENTOS 2",
+    "011436448": "ALIMENTOS 3",
+    "029617": "ALIMENTOS 4",
+    "011436456": "ALIMENTOS 5",
+    "011436462": "ALIMENTOS 6",
+    "011436468": "ALIMENTOS 7",
+    "011436470": "ALIMENTOS 8",
+    "011436483": "ALIMENTOS 9",
+    "011436488": "ALIMENTOS 10",
+"01482291": "ALIMENTOS 34",
+    "01495597": "ALIMENTOS 39",
+    "011436741": "ALIMENTOS 43",
+    "011436744": "ALIMENTOS 44",
+    "08871018": "ALIMENTOS 45",
+    "08871024": "ALIMENTOS 46",
+    "010583457": "ALIMENTOS 47",
+    "010583459": "ALIMENTOS 48",
+    "015352976": "ALIMENTOS 49",
+    "015352985": "ALIMENTOS 50",
+    "015392408": "ALIMENTOS 61",
+    "015392415": "ALIMENTOS 62",
+    "015392529": "ALIMENTOS 63",
+    "015392541": "ALIMENTOS 64",
+    "019472533": "ALIMENTOS 85",
+    "019472540": "ALIMENTOS 86",
+    "019472552": "ALIMENTOS 87",
+    "019472562": "ALIMENTOS 88",
+    "019474604": "ALIMENTOS 101",
+    "019474618": "ALIMENTOS 102",
+    "019474632": "ALIMENTOS 103",
+    "019474640": "ALIMENTOS 104",
+    // Salas de Animais
+    "033": "ANIMAIS 1",
+    "011436131": "ANIMAIS 2",
+    "011436139": "ANIMAIS 3",
+    "011436146": "ANIMAIS 4",
+    "011436155": "ANIMAIS 5",
+    "061314": "ANIMAIS 6",
+    "011436159": "ANIMAIS 7",
+    "011436158": "ANIMAIS 8",
+    "011436189": "ANIMAIS 12",
+    "011436193": "ANIMAIS 13",
+    "01383125": "ANIMAIS 33",
+    "01482285": "ANIMAIS 34",
+    "011436784": "ANIMAIS 43",
+    "08275850": "ANIMAIS 44",
+    "08871009": "ANIMAIS 45",
+    "011436796": "ANIMAIS 46",
+    "010583449": "ANIMAIS 47",
+    "010583451": "ANIMAIS 48",
+    "015352954": "ANIMAIS 49",
+    "015352967": "ANIMAIS 50",
+    "023340": "VERBOS 1",
+    "064453": "VERBOS 2",
+    "064456": "VERBOS 3",
+    "011436709": "VERBOS 5",
+    "01442892": "VERBOS 16",
+    // Salas de Profissões
+    "0180144": "PROFISSÔES 1",
+    "011436612": "PROFISSÔES 2",
+    "011436645": "PROFISSÔES 4",
+    "011436654": "PROFISSÔES 8",
+    "08141297": "PROFISSÔES 9",
+    "010583436": "PROFISSÔES 10",
+    // Salas de Desenhos Animados (D.A)
+    "034": "D.A 1",
+    "035": "D.A 2",
+    "01316875": "D.A 7",
+    "015146618": "D.A 10",
+    "015269596": "D.A 12",
+    "015269602": "D.A 13",
+    "015352879": "D.A 15",
+    "015352887": "D.A 16",
+    // Salas de Filmes
+    "020": "FILMES 1",
+    "021": "FILMES 2",
+    "01316871": "FILMES 7",
+    "01483601": "FILMES 14",
+    // Salas de Game of Thrones (GOT)
+    "05247712": "GOT 1",
+    "05247714": "GOT 2",
+    // Salas de Bandeiras
+    "053": "BANDEIRAS 1",
+    "032829": "BANDEIRAS 2",
+    // Sala de Música
+    "042463": "MUSICA 1",
+    // Salas Avançadas (AVÇ)
+    "036": "AVÇ 1",
+    "037": "AVÇ 2",
+    "038": "AVÇ 3",
+    // Salas de Espanhol
+    "0111150": "ESPANHOL 1",
+    // Salas de Caricaturas
+    "031": "CARICATURAS 1",
+    // Salas de Harry Potter (HP)
+    "0204642": "HP 1",
+    "0368492": "HP 2",
+    // Salas de Italiano
+    "01254112": "ITALIANO 1",
+    // Sala de Inglês
+    "059": "INGLES 1",
+    // Salas de Novelas
+    "0361146": "NOVELA 1",
+    "0368493": "NOVELA 2",
+    // Salas de Pokémon
+    "051": "POKEMON 1",
+    "04539464": "POKEMON 2",
+    // Salas de Adjetivos
+    "024201": "ADJETIVOS 1",
+    // Salas de Marvel e DC (MDC)
+    "03158864": "MDC1",
+    "03158865": "MDC2",
+    "03161447": "MDC4",
+    // Salas de Games
+    "055": "GAMES 1",
+        };
+               function buscarJogador() {
+            const nick = document.getElementById("nickInput").value.toLowerCase();
+            const resultados = [];
+            const tabela = document.getElementById("corpoTabela");
+            tabela.innerHTML = '';
+            salas.forEach(sala => {
+                const url = `https://gartic.com.br/info_sala.php?x=&id_sala=${sala}`;
+                const xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            const response = xhr.responseText;
+                            const jogadores = getJogadores(response);
+                            const jogadoresEmMinusculo = jogadores.map(jogador => jogador.toLowerCase());
+                            if (jogadoresEmMinusculo.includes(nick)) {
+                                resultados.push({
+                                    nick,
+                                    sala,
+                                });
+                            }
+
+                            if (resultados.length > 0) {
+                                document.getElementById("status").innerHTML = "Jogador(a) encontrado!";
+                                document.getElementById("status").classList.remove("offline");
+                                document.getElementById("status").classList.add("online");
+                            } else {
+                                document.getElementById("status").innerHTML = `O jogador(a) ${nick} está offline.`;
+                                document.getElementById("status").classList.remove("online");
+                                document.getElementById("status").classList.add("offline");
+                            }
+                           if (resultados.length > 0) {
+                document.getElementById("status").innerHTML = "Jogador(a) encontrado!";
+                document.getElementById("status").classList.remove("offline");
+                document.getElementById("status").classList.add("encontrado"); // Mudança aqui
+            } else {
+                document.getElementById("status").innerHTML = `O jogador(a) ${nick} está offline.`;
+                document.getElementById("status").classList.remove("encontrado"); // Mudança aqui
+                document.getElementById("status").classList.add("offline");
+            }
+
+                            tabela.innerHTML = resultados
+                                .map(resultado => {
+                                    const avatarURL = `https://gartic.com.br/avatar.php?nick=${resultado.nick}`;
+                                    return `
+                                        <tr>
+                                            <td><img src="${avatarURL}" alt="Avatar do Jogador"></td>
+                                            <td><a class="link" href="https://gartic.com.br/${resultado.nick}" target="_blank">${resultado.nick}</a></td>
+                                            <td><a class="link" href="https://gartic.com.br/${resultado.sala}" target="_blank">${nomeDasSalas[resultado.sala]}</a></td>
+                                        </tr>
+                                    `;
+                                })
+                                .join('');
+                        }
+                    }
+                };
+                xhr.open('GET', url);
+                xhr.send();
+            });
+        }
+        function getJogadores(response) {
+            const match = response.match(/"jogadores":\s*\[([^\]]*)\]/);
+            if (match && match[1]) {
+                return match[1].split(',').map(player => player.trim().replace(/"/g, ''));
+            }
+            return [];
+        }
+        function handleKeyPress(event) {
+            if (event.keyCode === 13) {
+                buscarJogador();
+            }
+        }
+    </script>
+</body>
+
+</html>
