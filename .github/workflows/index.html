@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -401,18 +402,18 @@
                 document.getElementById("status").classList.add("offline");
             }
 
-                            tabela.innerHTML = resultados
-                                .map(resultado => {
-                                    const avatarURL = `https://gartic.com.br/avatar.php?nick=${resultado.nick}`;
-                                    return `
-                                        <tr>
-                                            <td><img src="${avatarURL}" alt="Avatar do Jogador"></td>
-                                            <td><a class="link" href="https://gartic.com.br/${resultado.nick}" target="_blank">${resultado.nick}</a></td>
-                                            <td><a class="link" href="https://gartic.com.br/${resultado.sala}" target="_blank">${nomeDasSalas[resultado.sala]}</a></td>
-                                        </tr>
-                                    `;
-                                })
-                                .join('');
+                           tabela.innerHTML = resultados
+                .map(resultado => {
+                    const avatarURL = `https://gartic.com.br/avatar.php?nick=${resultado.nick}`;
+                    return `
+                        <tr>
+                            <td><img src="${avatarURL}" alt="Avatar do Jogador"></td>
+<td style="font-family: 'Google Sans', sans-serif;"><a href="https://gartic.com.br/${resultado.nick}" target="_blank" style="font-family: 'Google Sans', sans-serif;">${resultado.nick}</a></td>
+                            <td style="font-family: 'Google Sans', sans-serif;"><a href="https://gartic.com.br/${resultado.sala}" target="_blank">${nomeDasSalas[resultado.sala]}</a></td>
+                        </tr>
+                    `;
+                })
+                .join('');
                         }
                     }
                 };
