@@ -13,80 +13,65 @@
     <style>
         /* Aplicar a fonte do Google Sans para todo o texto no HTML */
         body {
-    font-family: 'Google Sans', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    font-size: 16px; /* Ajustar o tamanho da fonte principal */
-}
+            font-family: 'Google Sans', sans-serif !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Google Sans', sans-serif; 
+        }
+        #container {
+            text-align: center;
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        /* Estilos para a tabela */
+        #tabelaJogadores {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            border: 2px solid brown;
+        }
+        th {
+            background-color: brown;
+            color: white;
+            padding: 12px;
+        }
+        td {
+            padding: 12px;
+            border: 2px solid brown;
+        }
 
-#container {
-    text-align: center; /* Centralizar conteúdo */
-    max-width: 800px; /* Definir largura máxima */
-    margin: 0 auto; /* Centralizar horizontalmente */
-    padding: 20px;
-}
+        img {
+            width: 60px; /* Aumento do tamanho dos avatares */
+            height: 60px; /* Aumento do tamanho dos avatares */
+            width: 70px; /* Aumento do tamanho dos avatares */
+            height: 70px; /* Aumento do tamanho dos avatares */
+        }
 
-#tabelaJogadores {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    border: 2px solid brown;
-}
-
-th {
-    background-color: brown;
-    color: white;
-    padding: 8px; /* Reduzir o espaçamento interno */
-    border: 2px solid black;
-}
-
-td {
-    padding: 8px; /* Reduzir o espaçamento interno */
-    border: 2px solid brown;
-}
-
-/* Ajuste do tamanho dos avatares */
-td img {
-    width: 60px; /* Definindo largura dos avatares */
-    height: 60px; /* Definindo altura dos avatares */
-    display: block; /* Remover espaços extras */
-    margin: auto; /* Centralizar a imagem dentro da célula */
-}
-
-/* Limitar o tamanho da coluna "Nome do Jogador" */
-#tabelaJogadores td:nth-child(2),
-#tabelaJogadores th:nth-child(2) {
-    max-width: 18ch; /* Definir largura máxima baseada no tamanho do texto */
-    white-space: nowrap; /* Evita que o texto quebre em várias linhas */
-    overflow: hidden; /* Esconder texto extra além do limite */
-    text-overflow: ellipsis; /* Mostrar reticências para indicar texto cortado */
-}
-
-/* Estilos para o input e botão */
-#nickInput,
-button {
-    font-family: 'Google Sans', sans-serif;
-    padding: 10px 10px; /* Diminuindo o espaçamento */
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 2px solid brown;
-}
-
-#nickInput {
-    font-family: 'Google Sans', sans-serif;
-    color: black;
-    padding: 10px 5px; /* Diminuindo o espaçamento */
-    margin-right: 10px;
-}
-
-button {
-    color: white;
-    background-color: brown;
-}
+        /* Estilos para o input e botão */
+        #nickInput,
+        button {
+            font-family: 'Google Sans', sans-serif;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 2px solid brown;
+        }
+        #nickInput {
+            font-family: 'Google Sans', sans-serif;
+            color: black;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        button {
+            color: white;
+            background-color: brown;
+        }
         /* Estilos para os títulos e labels */
         h1,
         label {
@@ -149,6 +134,9 @@ button {
             </thead>
             <tbody id="corpoTabela"></tbody>
         </table>
+        <p style="color: brown; font-family: 'Google Sans', sans-serif; text-align: center; display: block; margin-top: 20px;">
+    Criado para jogadores mobile, desenvolvido por Kel.
+</p>
         <!-- Botão de voltar -->
     <a href="https://gtcmod.github.io/gtcsala/" class="btn-voltar">Voltar</a>
     </div>
@@ -449,9 +437,6 @@ button {
             }
         }
     </script>
-<p style="color: brown; font-family: 'Google Sans', sans-serif; text-align: center;">
-    Criado para jogadores mobile, desenvolvido por Kel.
-</p>
 </body>
 
 </html>
