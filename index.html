@@ -8,110 +8,123 @@
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
 
     <style>
-        /* Resetando estilos padrãos */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Google Sans', sans-serif;
-            background-color: #f8f8f8;
-        }
+    /* Resetando estilos padrãos */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Google Sans', sans-serif;
+        background-color: #292929;
+        color: #fff;
+    }
 
-        /* Estilos gerais */
-        #container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    /* Estilos gerais */
+    #container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #333;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
 
-        h1 {
-            color: #333;
-            text-align: center;
-        }
+    h1 {
+        color: #4caf50; /* Verde escuro */
+        text-align: center;
+    }
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: 'Google Sans', sans-serif;
-        }
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    font-family: 'Google Sans', sans-serif;
+    color: #fff; /* Alterado para branco */
+    background-color: #444;
+}
 
-        button {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            border: none;
-            color: #fff;
-            background-color: #008CBA;
-            font-family: 'Google Sans', sans-serif;
-        }
+    button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+        color: #fff;
+        background-color: #4caf50; /* Verde escuro */
+        font-family: 'Google Sans', sans-serif;
+    }
 
-        button:hover {
-            background-color: #005f75;
-        }
+    button:hover {
+        background-color: #36733a; /* Verde mais escuro ao passar o mouse */
+    }
 
-        #status {
-            margin-top: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
+    #status {
+        margin-top: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+    /* Adicione estilos para quando o jogador for encontrado */
+    #status.encontrado {
+        color: #4caf50; /* Verde escuro */
+    }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
+    /* Adicione estilos para quando o jogador estiver offline */
+    #status.offline {
+        color: #ff5722; /* Laranja escuro */
+    }
 
-        th {
-            background-color: #008CBA;
-            color: white;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
 
-        img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-        }
+    th, td {
+        border: 1px solid #555;
+        padding: 8px;
+        text-align: center;
+        color: #fff;
+    }
 
-        a {
-            text-decoration: none;
-            color: #008CBA;
-        }
+    th {
+        background-color: #4caf50; /* Verde escuro */
+    }
 
-        .btn-voltar {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #008CBA;
-            color: #fff;
-            font-size: 20px;
-            text-decoration: none;
-            font-family: 'Google Sans', sans-serif;
-        }
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
 
-        .btn-voltar:hover {
-            background-color: #005f75;
-        }
-    </style>
+    a {
+        text-decoration: none;
+        color: #4caf50; /* Verde escuro */
+    }
+
+    .btn-voltar {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4caf50; /* Verde escuro */
+        color: #fff;
+        font-size: 20px;
+        text-decoration: none;
+        font-family: 'Google Sans', sans-serif;
+    }
+
+    .btn-voltar:hover {
+        background-color: #36733a; /* Verde mais escuro ao passar o mouse */
+    }
+</style>
 </head>
 <body>
     <div id="container">
@@ -383,24 +396,15 @@
                                 });
                             }
 
-                            if (resultados.length > 0) {
-                                document.getElementById("status").innerHTML = "Jogador(a) encontrado!";
-                                document.getElementById("status").classList.remove("offline");
-                                document.getElementById("status").classList.add("online");
-                            } else {
-                                document.getElementById("status").innerHTML = `O jogador(a) ${nick} está offline.`;
-                                document.getElementById("status").classList.remove("online");
-                                document.getElementById("status").classList.add("offline");
-                            }
-                           if (resultados.length > 0) {
-                document.getElementById("status").innerHTML = "Jogador(a) encontrado!";
-                document.getElementById("status").classList.remove("offline");
-                document.getElementById("status").classList.add("encontrado"); // Mudança aqui
-            } else {
-                document.getElementById("status").innerHTML = `O jogador(a) ${nick} está offline.`;
-                document.getElementById("status").classList.remove("encontrado"); // Mudança aqui
-                document.getElementById("status").classList.add("offline");
-            }
+if (resultados.length > 0) {
+    document.getElementById("status").innerHTML = "Jogador(a) encontrado!";
+    document.getElementById("status").classList.remove("offline");
+    document.getElementById("status").classList.add("encontrado");
+} else {
+    document.getElementById("status").innerHTML = `O jogador(a) ${nick} está offline.`;
+    document.getElementById("status").classList.remove("encontrado");
+    document.getElementById("status").classList.add("offline");
+}
 
                            tabela.innerHTML = resultados
                 .map(resultado => {
