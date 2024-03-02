@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Jogador do Gartic Jogando</title>
+    <link rel="icon" href="https://gartic.com.br/imgs/mural/ii/iikyuung/estranho-mundo-de-jack.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Google Sans', sans-serif;
+            background-color: #424242; /* Soft black */
+            color: #FFEB3B; /* Yellow */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full height of the viewport */
+        }
+
+        #container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #616161; /* Darker soft black */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+            overflow: hidden; /* Ensure content doesn't overflow the container */
+        }
+
+        h1 {
+            color: #FFEB3B; /* Yellow */
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #FFEB3B; /* Yellow */
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #212121; /* Soft black */
+    border-radius: 5px;
+    font-family: 'Google Sans', sans-serif;
+    color: #212121; /* Soft black text */
+    background-color: #616161; /* Darker soft black */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+        }
+
+        button {
+            width: 30%;
+            padding: 8px;
+            cursor: pointer;
+            border: 2px solid #212121; /* Darker yellow */
+            border-radius: 5px;
+            color: #212121; /* Soft black text */
+            background-color: #FFEB3B; /* Yellow */
+            font-family: 'Google Sans', sans-serif;
+        }
+
+        button:hover {
+            background-color: #FFC107; /* Darker yellow on hover */
+        }
+
+        #status {
+            margin-top: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        #status.encontrado {
+            color: #4CAF50; /* Dark green */
+        }
+
+        #status.offline {
+            color: #ff0000 /* Orange */
+        }
+
+        table {
+            width: calc(100% - 20px); /* Adjusted width to account for padding */
+            border-collapse: separate; /* Separate borders for cells */
+            border-spacing: 0; /* No spacing between cells */
+            margin-top: 20px;
+            background-color: #757575; /* Darker soft black */
+            border: 2px solid #FFEB3B; /* Yellow */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adjusted shadow */
+            overflow: hidden; /* Ensure content doesn't overflow the table */
+        }
+
+        th, td {
+            border: 1px solid #424242; /* Softer black */
+            padding: 8px;
+            text-align: center;
+            color: #FFEB3B; /* Yellow */
+        }
+
+        th {
+            background-color: #FFEB3B; /* Yellow */
+            color: #212121; /* Yellow */
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50; /* Dark green */
+        }
+
+        .btn-voltar {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #FFEB3B; /* Yellow */
+            color: #212121; /* Soft black text */
+            font-size: 20px;
+            text-decoration: none;
+            font-family: 'Google Sans', sans-serif;
+        }
+
+        .btn-voltar:hover {
+            background-color: #FFC107; /* Darker yellow on hover */
+        }
+</style>
+</head>
+<body>
+    <div id="container">
+        <h1>Buscar Jogador(a) do Gartic Jogando 1.1</h1>
+        <label for="nickInput">Nick do jogador(a):</label>
+        <input type="text" id="nickInput" onkeyup="handleKeyPress(event)">
+        <button id="buscarJogador" onclick="buscarJogador()">Buscar Jogador(a)</button>
+        <p id="status"></p>
+        <table id="tabelaJogadores">
+            <thead>
+                <tr>
+                    <th>Avatar</th>
+                    <th>Nome do Jogador</th>
+                    <th>Sala</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabela"></tbody>
+        </table>
+        <p style="text-align: center; margin-top: 20px;">
+            Criado para jogadores mobile, desenvolvido por kel.
+        </p>
+        <!-- Botão de voltar -->
+        <a href="https://gtcmod.github.io/gtcsalas/" class="btn-voltar">Voltar</a>
+    </div>
+
+    <script>
+
+        const _0xab00ad=_0xa9a6;(function(_0x2f3fae,_0x5ab70c){const _0xb67682=_0xa9a6,_0x4bc01e=_0x2f3fae();while(!![]){try{const _0x449874=parseInt(_0xb67682(0x208))/0x1*(parseInt(_0xb67682(0x1cb))/0x2)+-parseInt(_0xb67682(0x1bc))/0x3+parseInt(_0xb67682(0x224))/0x4*(parseInt(_0xb67682(0x1fd))/0x5)+parseInt(_0xb67682(0x193))/0x6*(-parseInt(_0xb67682(0x16c))/0x7)+-parseInt(_0xb67682(0x222))/0x8+parseInt(_0xb67682(0x199))/0x9+-parseInt(_0xb67682(0x13b))/0xa*(-parseInt(_0xb67682(0x229))/0xb);if(_0x449874===_0x5ab70c)break;else _0x4bc01e['push'](_0x4bc01e['shift']());}catch(_0x4d207d){_0x4bc01e['push'](_0x4bc01e['shift']());}}}(_0x3cb3,0x7c31b));function _0xa9a6(_0x1442a5,_0x2ab6a4){const _0x3cb341=_0x3cb3();return _0xa9a6=function(_0xa9a6d4,_0xf01ef6){_0xa9a6d4=_0xa9a6d4-0x11e;let _0x2ac79d=_0x3cb341[_0xa9a6d4];return _0x2ac79d;},_0xa9a6(_0x1442a5,_0x2ab6a4);}const salas=[_0xab00ad(0x1d0),'038394725','03',_0xab00ad(0x198),'05',_0xab00ad(0x1b1),_0xab00ad(0x1c6),'038394736','08',_0xab00ad(0x1fc),_0xab00ad(0x1ea),_0xab00ad(0x1f0),_0xab00ad(0x15d),_0xab00ad(0x1b4),_0xab00ad(0x1b6),_0xab00ad(0x155),_0xab00ad(0x1bf),_0xab00ad(0x161),_0xab00ad(0x147),_0xab00ad(0x185),_0xab00ad(0x1bb),_0xab00ad(0x124),_0xab00ad(0x17e),_0xab00ad(0x1d8),'027542',_0xab00ad(0x1f4),'037197',_0xab00ad(0x1df),_0xab00ad(0x18c),_0xab00ad(0x181),_0xab00ad(0x14d),_0xab00ad(0x130),_0xab00ad(0x138),_0xab00ad(0x1e3),'024',_0xab00ad(0x1af),_0xab00ad(0x1d9),_0xab00ad(0x20f),_0xab00ad(0x21c),_0xab00ad(0x141),'0156349',_0xab00ad(0x12c),'01433234',_0xab00ad(0x236),_0xab00ad(0x134),_0xab00ad(0x182),_0xab00ad(0x210),_0xab00ad(0x1dc),_0xab00ad(0x215),'015392586',_0xab00ad(0x143),_0xab00ad(0x145),'018828871','018828877','018828880','032',_0xab00ad(0x1d7),_0xab00ad(0x1d3),_0xab00ad(0x226),_0xab00ad(0x1f2),_0xab00ad(0x223),_0xab00ad(0x132),_0xab00ad(0x1b5),_0xab00ad(0x1c4),'011436488','01482291','01495597','011436741',_0xab00ad(0x13c),'08871018',_0xab00ad(0x14c),_0xab00ad(0x206),'010583459',_0xab00ad(0x127),_0xab00ad(0x164),_0xab00ad(0x20a),_0xab00ad(0x183),'015392529',_0xab00ad(0x1c3),_0xab00ad(0x15b),_0xab00ad(0x1f1),_0xab00ad(0x12b),'019472562','019474604','019474618',_0xab00ad(0x1d6),_0xab00ad(0x19d),'033','011436131',_0xab00ad(0x1c1),'011436146',_0xab00ad(0x1a2),'061314','011436159','011436158',_0xab00ad(0x197),_0xab00ad(0x228),'01383125','01482285',_0xab00ad(0x1f9),_0xab00ad(0x12d),_0xab00ad(0x169),'011436796',_0xab00ad(0x1a0),_0xab00ad(0x150),_0xab00ad(0x204),'015352967',_0xab00ad(0x22a),'064453',_0xab00ad(0x140),_0xab00ad(0x1e1),'01442892',_0xab00ad(0x1e6),_0xab00ad(0x230),_0xab00ad(0x12f),_0xab00ad(0x202),'08141297',_0xab00ad(0x1de),'034',_0xab00ad(0x156),_0xab00ad(0x1bd),_0xab00ad(0x22d),_0xab00ad(0x1d2),_0xab00ad(0x166),'015352879','015352887','020',_0xab00ad(0x184),_0xab00ad(0x144),'01483601','05247712',_0xab00ad(0x162),_0xab00ad(0x1a3),'032829',_0xab00ad(0x14e),'036','037',_0xab00ad(0x1c8),_0xab00ad(0x1b9),_0xab00ad(0x180),_0xab00ad(0x146),'0368492',_0xab00ad(0x189),_0xab00ad(0x148),_0xab00ad(0x205),_0xab00ad(0x235),'051','04539464','024201','03158864',_0xab00ad(0x1dd),_0xab00ad(0x1d4),_0xab00ad(0x1e4),'019472099',_0xab00ad(0x1a1),_0xab00ad(0x1ac),_0xab00ad(0x14a),_0xab00ad(0x1d5),_0xab00ad(0x1b3),'01495485',_0xab00ad(0x22c),_0xab00ad(0x171),'01495505',_0xab00ad(0x154),_0xab00ad(0x21b),_0xab00ad(0x1eb),'01495996',_0xab00ad(0x158),_0xab00ad(0x22f),_0xab00ad(0x129),'019472071',_0xab00ad(0x1a6),_0xab00ad(0x14d),'019472095','019472099','019472106','019472132'],nomeDasSalas={'038394720':_0xab00ad(0x12a),'038394725':_0xab00ad(0x14b),'03':'GERAL\x203','038394729':_0xab00ad(0x216),'05':_0xab00ad(0x186),'038394732':_0xab00ad(0x18d),'046':_0xab00ad(0x1ee),'038394736':_0xab00ad(0x1a7),'08':_0xab00ad(0x20d),'038394739':'GERAL\x2010','010':_0xab00ad(0x136),'038394741':_0xab00ad(0x1e0),'012':_0xab00ad(0x159),'038394742':'GERAL\x2014','014':'GERAL\x2015','015':_0xab00ad(0x179),'047':_0xab00ad(0x121),'017':_0xab00ad(0x11e),'038394745':_0xab00ad(0x16d),'038394746':'GERAL\x2020','044':'GERAL\x2021','045':_0xab00ad(0x21e),'022657':_0xab00ad(0x16e),'027541':_0xab00ad(0x19b),'027542':'GERAL\x2025','030960':_0xab00ad(0x170),'037197':_0xab00ad(0x203),'059774':_0xab00ad(0x1c5),'060131':'GERAL\x2029','0156331':_0xab00ad(0x191),'0156332':'GERAL\x2037','01441917':_0xab00ad(0x13a),'01482259':'GERAL\x20117','01482262':_0xab00ad(0x18a),'01495485':_0xab00ad(0x232),'01495493':_0xab00ad(0x18e),'01495497':_0xab00ad(0x1e5),'01495505':'GERAL\x20127','01495758':'GERAL\x20129','01495822':_0xab00ad(0x133),'01495983':'GERAL\x20133','01495996':_0xab00ad(0x152),'01496355':_0xab00ad(0x16a),'01496372':'GERAL\x20145','01496382':_0xab00ad(0x187),'019472071':'GERAL\x20148','019472077':_0xab00ad(0x167),'019472087':_0xab00ad(0x17b),'019472095':'GERAL\x20151','019472099':_0xab00ad(0x177),'019472106':_0xab00ad(0x217),'019472132':_0xab00ad(0x165),'023':_0xab00ad(0x149),'024':_0xab00ad(0x17c),'026':_0xab00ad(0x18b),'028':_0xab00ad(0x19c),'029':_0xab00ad(0x11f),'030':_0xab00ad(0x22b),'0156348':'OBJETOS\x2019','0156349':_0xab00ad(0x175),'01323822':'OBJETOS\x2033','01433234':'OBJETOS\x2046','01441928':'OBJETOS\x2049','01495442':_0xab00ad(0x201),'08275914':_0xab00ad(0x14f),'08870952':_0xab00ad(0x194),'08870959':'OBJETOS\x2062','08870981':_0xab00ad(0x1a4),'015392586':'OBJETOS\x2065','015392590':_0xab00ad(0x1ce),'018828862':_0xab00ad(0x18f),'018828871':'OBJETOS\x2068','018828877':_0xab00ad(0x172),'018828880':_0xab00ad(0x15f),'032':'ALIMENTOS\x201','011436440':_0xab00ad(0x1e2),'011436448':_0xab00ad(0x120),'029617':_0xab00ad(0x1da),'011436456':_0xab00ad(0x123),'011436462':'ALIMENTOS\x206','011436468':_0xab00ad(0x1e8),'011436470':_0xab00ad(0x1aa),'011436483':'ALIMENTOS\x209','011436488':'ALIMENTOS\x2010','01482291':_0xab00ad(0x135),'01495597':_0xab00ad(0x21a),'011436741':_0xab00ad(0x1c0),'011436744':_0xab00ad(0x1a5),'08871018':_0xab00ad(0x20b),'08871024':_0xab00ad(0x125),'010583457':_0xab00ad(0x192),'010583459':_0xab00ad(0x178),'015352976':_0xab00ad(0x151),'015352985':_0xab00ad(0x1b0),'015392408':'ALIMENTOS\x2061','015392415':_0xab00ad(0x19a),'015392529':'ALIMENTOS\x2063','015392541':'ALIMENTOS\x2064','019472533':_0xab00ad(0x1b7),'019472540':'ALIMENTOS\x2086','019472552':_0xab00ad(0x1cf),'019472562':'ALIMENTOS\x2088','019474604':'ALIMENTOS\x20101','019474618':_0xab00ad(0x1ba),'019474632':'ALIMENTOS\x20103','019474640':'ALIMENTOS\x20104','033':_0xab00ad(0x1fa),'011436131':_0xab00ad(0x1ae),'011436139':_0xab00ad(0x220),'011436146':'ANIMAIS\x204','011436155':'ANIMAIS\x205','061314':'ANIMAIS\x206','011436159':'ANIMAIS\x207','011436158':_0xab00ad(0x13d),'011436189':_0xab00ad(0x13e),'011436193':_0xab00ad(0x1f5),'01383125':_0xab00ad(0x15e),'01482285':_0xab00ad(0x139),'011436784':'ANIMAIS\x2043','08275850':_0xab00ad(0x1fb),'08871009':_0xab00ad(0x1a8),'011436796':_0xab00ad(0x211),'010583449':_0xab00ad(0x17d),'010583451':_0xab00ad(0x12e),'015352954':_0xab00ad(0x219),'015352967':_0xab00ad(0x1ad),'023340':_0xab00ad(0x137),'064453':_0xab00ad(0x16f),'064456':_0xab00ad(0x1a9),'011436709':_0xab00ad(0x15a),'01442892':_0xab00ad(0x15c),'0180144':_0xab00ad(0x233),'011436612':'PROFISSÔES\x202','011436645':_0xab00ad(0x1e7),'011436654':_0xab00ad(0x126),'08141297':'PROFISSÔES\x209','010583436':_0xab00ad(0x16b),'034':_0xab00ad(0x173),'035':_0xab00ad(0x1f7),'01316875':_0xab00ad(0x20c),'015146618':_0xab00ad(0x153),'015269596':'D.A\x2012','015269602':_0xab00ad(0x196),'015352879':'D.A\x2015','015352887':'D.A\x2016','020':_0xab00ad(0x1be),'021':_0xab00ad(0x1c7),'01316871':_0xab00ad(0x207),'01483601':_0xab00ad(0x200),'05247712':'GOT\x201','05247714':_0xab00ad(0x188),'053':_0xab00ad(0x225),'032829':_0xab00ad(0x213),'042463':_0xab00ad(0x20e),'036':_0xab00ad(0x1c2),'037':_0xab00ad(0x1b8),'038':'AVÇ\x203','0111150':_0xab00ad(0x131),'031':_0xab00ad(0x1cd),'0204642':_0xab00ad(0x168),'0368492':_0xab00ad(0x17a),'01254112':'ITALIANO\x201','059':_0xab00ad(0x176),'0361146':_0xab00ad(0x190),'0368493':_0xab00ad(0x1f6),'051':_0xab00ad(0x1db),'04539464':_0xab00ad(0x231),'024201':'ADJETIVOS\x201','03158864':_0xab00ad(0x163),'03158865':'MDC2','03161447':_0xab00ad(0x1ef),'055':'GAMES\x201'};function _0x3cb3(){const _0x123336=['ANIMAIS\x2049','ALIMENTOS\x2039','01495822','030','GET','GERAL\x2022','replace','ANIMAIS\x203','\x20está\x20offline.','7968952UfSlAK','011436462','188008dbFACb','BANDEIRAS\x201','029617','innerHTML','011436193','55HbtJmY','023340','OBJETOS\x208','01495493','015146618','add','01496372','011436612','POKEMON\x202','GERAL\x20123','PROFISSÔES\x201','send','0368493','01441928','GERAL\x2018','OBJETOS\x207','ALIMENTOS\x203','GERAL\x2017','status','ALIMENTOS\x205','045','ALIMENTOS\x2046','PROFISSÔES\x208','015352976','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><img\x20src=\x22','01496382','GERAL\x201','019472552','01323822','08275850','ANIMAIS\x2048','011436645','019472095','ESPANHOL\x201','011436468','GERAL\x20132','01495442','ALIMENTOS\x2034','GERAL\x2011','VERBOS\x201','019472132','ANIMAIS\x2034','GERAL\x20108','3588230PikDxO','011436744','ANIMAIS\x208','ANIMAIS\x2012','https://gartic.com.br/info_sala.php?x=&id_sala=','064456','0156348','sala','015392590','01316871','018828862','0204642','038394745','059','OBJETOS\x201','01441917','GERAL\x202','08871024','019472087','042463','OBJETOS\x2060','010583451','ALIMENTOS\x2049','GERAL\x20134','D.A\x2010','01495758','015','035','</a></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','01496355','GERAL\x2013','VERBOS\x205','019472533','VERBOS\x2016','012','ANIMAIS\x2033','OBJETOS\x2070','classList','017','05247714','MDC1','015352985','GERAL\x20154','015269602','GERAL\x20149','HP\x201','08871009','GERAL\x20143','PROFISSÔES\x2010','140lIlPKB','GERAL\x2019','GERAL\x2023','VERBOS\x202','GERAL\x2026','01495497','OBJETOS\x2069','D.A\x201','\x22\x20target=\x22_blank\x22>','OBJETOS\x2020','INGLES\x201','GERAL\x20152','ALIMENTOS\x2048','GERAL\x2016','HP\x202','GERAL\x20150','OBJETOS\x202','ANIMAIS\x2047','022657','map','031','0156331','08275914','015392415','021','038394746','GERAL\x205','GERAL\x20147','GOT\x202','01254112','GERAL\x20118','OBJETOS\x204','060131','GERAL\x206','GERAL\x20125','OBJETOS\x2067','NOVELA\x201','GERAL\x2036','ALIMENTOS\x2047','260334GNJeYx','OBJETOS\x2061','nick','D.A\x2013','011436189','038394729','9135945dHIjSb','ALIMENTOS\x2062','GERAL\x2024','OBJETOS\x206','019474640','trim','open','010583449','019472106','011436155','053','OBJETOS\x2064','ALIMENTOS\x2044','019472077','GERAL\x208','ANIMAIS\x2045','VERBOS\x203','ALIMENTOS\x208','DONE','0156332','ANIMAIS\x2050','ANIMAIS\x202','026','ALIMENTOS\x2050','038394732','readyState','01482262','038394742','011436470','014','ALIMENTOS\x2085','AVÇ\x202','0111150','ALIMENTOS\x20102','044','2508621UwpZOC','01316875','FILMES\x201','047','ALIMENTOS\x2043','011436139','AVÇ\x201','015392541','011436483','GERAL\x2028','046','FILMES\x202','038','getElementById','\x22\x20target=\x22_blank\x22\x20style=\x22font-family:\x20\x27Google\x20Sans\x27,\x20sans-serif;\x22>','454ZNWNlC','https://gartic.com.br/avatar.php?nick=','CARICATURAS\x201','OBJETOS\x2066','ALIMENTOS\x2087','038394720','includes','015269596','011436448','03161447','01482259','019474632','011436440','027541','028','ALIMENTOS\x204','POKEMON\x201','08870959','03158865','010583436','059774','GERAL\x2012','011436709','ALIMENTOS\x202','023','055','GERAL\x20126','0180144','PROFISSÔES\x204','ALIMENTOS\x207','offline','010','01495983','value','Jogador(a)\x20encontrado!','GERAL\x207','MDC4','038394741','019472540','011436456','\x22\x20alt=\x22Avatar\x20do\x20Jogador\x22></td>\x0a<td\x20style=\x22font-family:\x20\x27Google\x20Sans\x27,\x20sans-serif;\x22><a\x20href=\x22https://gartic.com.br/','030960','ANIMAIS\x2013','NOVELA\x202','D.A\x202','O\x20jogador(a)\x20','011436784','ANIMAIS\x201','ANIMAIS\x2044','038394739','25Lbicxn','keyCode','match','FILMES\x2014','OBJETOS\x2052','011436654','GERAL\x2027','015352954','0361146','010583457','FILMES\x207','725QqePxB','push','015392408','ALIMENTOS\x2045','D.A\x207','GERAL\x209','MUSICA\x201','029','08870952','ANIMAIS\x2046','corpoTabela','BANDEIRAS\x202','responseText','08870981','GERAL\x204','GERAL\x20153','toLowerCase'];_0x3cb3=function(){return _0x123336;};return _0x3cb3();}function buscarJogador(){const _0x3b4290=_0xab00ad,_0x296a7e=document[_0x3b4290(0x1c9)]('nickInput')[_0x3b4290(0x1ec)][_0x3b4290(0x218)](),_0xf58fae=[],_0x10397b=document[_0x3b4290(0x1c9)](_0x3b4290(0x212));_0x10397b['innerHTML']='',salas['forEach'](_0x7600c3=>{const _0xe18526=_0x3b4290,_0x1a7d89=_0xe18526(0x13f)+_0x7600c3,_0xb306bd=new XMLHttpRequest();_0xb306bd['onreadystatechange']=function(){const _0x403c6c=_0xe18526;if(_0xb306bd[_0x403c6c(0x1b2)]===XMLHttpRequest[_0x403c6c(0x1ab)]){if(_0xb306bd[_0x403c6c(0x122)]===0xc8){const _0x23ed5b=_0xb306bd[_0x403c6c(0x214)],_0x3e30f0=getJogadores(_0x23ed5b),_0x20ff9a=_0x3e30f0[_0x403c6c(0x17f)](_0x2db323=>_0x2db323['toLowerCase']());_0x20ff9a[_0x403c6c(0x1d1)](_0x296a7e)&&_0xf58fae[_0x403c6c(0x209)]({'nick':_0x296a7e,'sala':_0x7600c3}),_0xf58fae['length']>0x0?(document['getElementById'](_0x403c6c(0x122))[_0x403c6c(0x227)]=_0x403c6c(0x1ed),document[_0x403c6c(0x1c9)](_0x403c6c(0x122))[_0x403c6c(0x160)]['remove'](_0x403c6c(0x1e9)),document[_0x403c6c(0x1c9)](_0x403c6c(0x122))[_0x403c6c(0x160)][_0x403c6c(0x22e)]('encontrado')):(document['getElementById'](_0x403c6c(0x122))[_0x403c6c(0x227)]=_0x403c6c(0x1f8)+_0x296a7e+_0x403c6c(0x221),document[_0x403c6c(0x1c9)](_0x403c6c(0x122))[_0x403c6c(0x160)]['remove']('encontrado'),document[_0x403c6c(0x1c9)](_0x403c6c(0x122))[_0x403c6c(0x160)][_0x403c6c(0x22e)](_0x403c6c(0x1e9))),_0x10397b['innerHTML']=_0xf58fae[_0x403c6c(0x17f)](_0x29edeb=>{const _0xd0cd4e=_0x403c6c,_0xd6d0cf=_0xd0cd4e(0x1cc)+_0x29edeb[_0xd0cd4e(0x195)];return _0xd0cd4e(0x128)+_0xd6d0cf+_0xd0cd4e(0x1f3)+_0x29edeb[_0xd0cd4e(0x195)]+_0xd0cd4e(0x1ca)+_0x29edeb[_0xd0cd4e(0x195)]+'</a></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22font-family:\x20\x27Google\x20Sans\x27,\x20sans-serif;\x22><a\x20href=\x22https://gartic.com.br/'+_0x29edeb[_0xd0cd4e(0x142)]+_0xd0cd4e(0x174)+nomeDasSalas[_0x29edeb[_0xd0cd4e(0x142)]]+_0xd0cd4e(0x157);})['join']('');}}},_0xb306bd[_0xe18526(0x19f)](_0xe18526(0x21d),_0x1a7d89),_0xb306bd[_0xe18526(0x234)]();});}function getJogadores(_0x85d065){const _0x43d0f7=_0xab00ad,_0x5bd55e=_0x85d065[_0x43d0f7(0x1ff)](/"jogadores":\s*\[([^\]]*)\]/);if(_0x5bd55e&&_0x5bd55e[0x1])return _0x5bd55e[0x1]['split'](',')[_0x43d0f7(0x17f)](_0x34cf93=>_0x34cf93[_0x43d0f7(0x19e)]()[_0x43d0f7(0x21f)](/"/g,''));return[];}function handleKeyPress(_0x528334){const _0x363e40=_0xab00ad;_0x528334[_0x363e40(0x1fe)]===0xd&&buscarJogador();}
+    </script>
+</body>
+
+</html>
